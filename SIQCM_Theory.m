@@ -4,13 +4,6 @@ clear all
 close all
 clc
 
-% OTFo = double(imread('OTF.tif'));
-% OTFo = OTFpost(OTFo);
-% n = size(OTFo);
-% itx_factor = 2;
-% OTFo_c = OTFo(1:itx_factor:end,1:itx_factor:end);
-% OTFo = zeros(size(OTFo));
-% OTFo(n/2-n/itx_factor/2+1:n/2+n/itx_factor/2,n/2-n/itx_factor/2+1:n/2+n/itx_factor/2) = OTFo_c; %% Load Raw SIM Image
 
 % load("result.mat");
 % 
