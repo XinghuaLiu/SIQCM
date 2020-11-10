@@ -32,27 +32,25 @@ function [Fsum,Fsum2,Fperi,Fcent] = WienerF2(f,k,kcutoff,gamma)
 %         end
 %     end
   %  shift every component to corrected position 
-    k0 = mean(sqrt(k(:,1).^2+k(:,2).^2));
-    H = triMask(t,kcutoff,k0);
-    for i = 1 : n
-       for j = 1 : n 
-           tempD = OTFgenerate(w*2,kcutoff*sqrt(2),k(i,:).*kshift(j));
-%            figure;
-%            imshow(tempD,[]);
-%            title((i-1)*n+j);
-           Dsum = Dsum+ tempD.*c(j).*c(j).*tempD;
-         
-           if((~isequal(j,1)))
-             Dperi = Dperi+tempD.*c(j).*c(j).*tempD;
-           end
-       end
-    end
+%     for i = 1 : n
+%        for j = 1 : n 
+%            tempD = OTFgenerate(w*2,kcutoff*sqrt(2),k(i,:).*kshift(j));
+% %            figure;
+% %            imshow(tempD,[]);
+% %            title((i-1)*n+j);
+%            Dsum = Dsum+ tempD.*c(j).*c(j).*tempD;
+%          
+%            if((~isequal(j,1)))
+%              Dperi = Dperi+tempD.*c(j).*c(j).*tempD;
+%            end
+%        end
+%     end
     for i = 1 : n
        for j = 1 : n
-           W = WienerMask(t,kmax,k0,k,(i-1)*n+1);
-           temp = fftshift(ifft2(fdouble(:,:,(i-1)*n+j).*W));          
+           W = WienerMask(t,kcutoff,k,k(i,:).*kshift(j),gamma);
+           temp = (ifft2(fdouble(:,:,(i-1)*n+j).*W));   
+      %     imshow(log(W),[]);
            temp =temp .* exp( kshift(j)*1i.*2.*pi.*((k(i,2)/t.*(U-to) + k(i,1)/t.*(V-to))));
-           %Dsum = Dsum+ c(j).*c(j).*tempD.*tempD;
            Fsum = Fsum + temp;
 %            figure();
 %            imshow(log(abs(temp)),[]);
@@ -63,11 +61,8 @@ function [Fsum,Fsum2,Fperi,Fcent] = WienerF2(f,k,kcutoff,gamma)
            end
        end
     end
-    Dsum = Dsum + gamma*gamma;
-    Dperi = Dperi + gamma*gamma;
-
-    Fsum2 = Fsum./Dsum;
-    Fsum = Fsum./Dsum.*H;
-    Fperi = Fperi./Dperi.*H;
-   
+    figure;
+    imshow(abs(Fsum),[]);
+    colormap('hot');
+    title('SIQCM in Real Space')
 end

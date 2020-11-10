@@ -51,7 +51,7 @@ function [Fsum,Fsum2,Fperi,Fcent] = WienerF(f,k,kcutoff,gamma)
     for i = 1 : n
        for j = 1 : n
            tempD = OTFgenerate(w*2,kcutoff*sqrt(2),k(i,:).*kshift(j));
-           imshow((tempD),[]);
+           %imshow((tempD),[]);
            temp = tempD.*c(j).*c(j).*fft2(ifft2(fdouble(:,:,(i-1)*n+j)).*...
                exp( kshift(j)*1i.*2.*pi.*((k(i,2)/t.*(U-to) + k(i,1)/t.*(V-to)))));          
        

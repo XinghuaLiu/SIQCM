@@ -5,7 +5,6 @@ close all
 clc
 
 
-% load("result.mat");
 % 
 % aa1 = imread('sim01z4.tif');
 % aa = aa1(:,:,2);
@@ -17,7 +16,7 @@ clc
 % end
 % framesSIM = double(bb);
 % n = 3;
-load("../Modified SOFI/fSOFI/result_s17_k15.mat")
+load("../../Modified SOFI/fSOFI/result_s17_k15.mat")
 framesSOFI = framesSOFI_FI;
 framesSIM = framesSIM_FIFI;
 %% Background Normalization
@@ -67,6 +66,7 @@ viewIMG(fSOFI);
 % viewIMG(wienerFreq);
 
 [Fsum,Fsum2,Fperi,Fcent] = WienerF(fSOFI,kSOFI,kcutoff,gamma);
+Dsum=WienerF2(fSOFI,kSOFI,kcutoff,gamma);
 %[FsumSIM,FsumSIM2,FperiSIM,FcentSIM] = WienerFSIM(fSIM,kSIM,kcutoff,gamma);
 SIMplot(Fsum,Fsum2,Fperi,Fcent,kSOFI,OTFo);
 % SIMplotSIM(FsumSIM,FsumSIM2,FperiSIM,FcentSIM,kSIM,OTFo);
