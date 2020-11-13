@@ -1,4 +1,4 @@
-function [Fsum,Fsum2,Fperi,Fcent] = WienerF(f,k,kcutoff,gamma)
+function [Fsum,Fsum2,Fperi,Fcent] = WienerF(f, k, kcutoff, gamma)
     n = ceil(size(f,3)^0.5);
     Fcent =zeros(size(f,1),size(f,2));
     for i = 1 : n

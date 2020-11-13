@@ -5,30 +5,18 @@ close all
 clc
 
 
-% 
-% aa1 = imread('sim01z4.tif');
-% aa = aa1(:,:,2);
-% bb = uint16(zeros(512,512,9));
-% for ii=1:3
-%      for jj=1:3
-%         bb(1:512,1:512,(ii-1)*3+jj)=aa((ii-1)*512+1:ii*512,(jj-1)*512+1:jj*512,1);
-%      end
-% end
-% framesSIM = double(bb);
-% n = 3;
-load("../../Modified SOFI/fSOFI/result_s17_k15.mat")
+load("../../Modified SOFI/fSOFI/result_256_s17k2.mat")
 framesSOFI = framesSOFI_FI;
 framesSIM = framesSIM_FIFI;
 %% Background Normalization
 framesSOFI = BgNormalization(framesSOFI);
 framesSIM = BgNormalization(framesSIM);
-%framesSOFI = BgNormalization(framesSOFI);
-%kcutoff = 71.2;
+
 kcutoff = 71.2;
 gamma = 0.03;
-k_factor = 1.5;
-k = [];
-phase = [];
+k_factor = 2;
+Mag_factor = 512./size(framesSOFI,1);
+
 OTFo = OTFgenerate(size(framesSOFI,1),kcutoff,[0 0]);
 %% Background subtraction
 

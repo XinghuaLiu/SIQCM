@@ -62,7 +62,7 @@ function [Fsum,Fsum2,Fperi,Fcent] = WienerF2(f,k,kcutoff,gamma)
        end
     end
     figure;
-    imshow(abs(Fsum),[]);
+    imshow(real(Fsum),[]);
     colormap('hot');
     title('SIQCM in Real Space')
 end

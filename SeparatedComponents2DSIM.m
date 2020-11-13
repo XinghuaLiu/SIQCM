@@ -1,4 +1,4 @@
-function freq = SeparatedComponents2D(phase,frames)
+function freq = SeparatedComponents2DSIM(phase,frames)
 
 %Aim: Unmixing the frequency components of raw SIM images
 %
