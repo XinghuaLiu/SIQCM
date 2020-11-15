@@ -1,4 +1,4 @@
-function [Fsum,Fsum2,Fperi,Fcent] = WienerF2(f,k,kcutoff,gamma)
+function Fsum = WienerF2(f,k,kcutoff,gamma)
     n = ceil(size(f,3)^0.5);
     Fcent =zeros(size(f,1),size(f,2));
     for i = 1 : n
@@ -24,31 +24,10 @@ function [Fsum,Fsum2,Fperi,Fcent] = WienerF2(f,k,kcutoff,gamma)
     fdouble = fTemp;
     c = [0.375 0.25 0.25 0.0625 0.0625];
     kshift = [0 1 -1 2 -2];
-   % k_mag = [sqrt(2) sqrt(2) sqrt(2) sqrt(2) sqrt(2)];
-%     for i = 1 : n
-%         for j = 1 : n
-%             TempMask = Ro<(kcutoff*k_mag(j)*1.05);
-%             fdouble(:,:,(i-1)*n+j) = fdouble(:,:,(i-1)*n+j).*TempMask;
-%         end
-%     end
-  %  shift every component to corrected position 
-%     for i = 1 : n
-%        for j = 1 : n 
-%            tempD = OTFgenerate(w*2,kcutoff*sqrt(2),k(i,:).*kshift(j));
-% %            figure;
-% %            imshow(tempD,[]);
-% %            title((i-1)*n+j);
-%            Dsum = Dsum+ tempD.*c(j).*c(j).*tempD;
-%          
-%            if((~isequal(j,1)))
-%              Dperi = Dperi+tempD.*c(j).*c(j).*tempD;
-%            end
-%        end
-%     end
     for i = 1 : n
        for j = 1 : n
            W = WienerMask(t,kcutoff,k,k(i,:).*kshift(j),gamma);
-           temp = (ifft2(fdouble(:,:,(i-1)*n+j).*W));   
+           temp = (ifft2(fftshift(fdouble(:,:,(i-1)*n+j).*W)));   
       %     imshow(log(W),[]);
            temp =temp .* exp( kshift(j)*1i.*2.*pi.*((k(i,2)/t.*(U-to) + k(i,1)/t.*(V-to))));
            Fsum = Fsum + temp;
@@ -57,7 +36,6 @@ function [Fsum,Fsum2,Fperi,Fcent] = WienerF2(f,k,kcutoff,gamma)
 %            title((i-1)*n+j);
            if(~isequal(j,1))
                Fperi = Fperi+temp;
-              % Dperi = Dperi+c(j).*c(j).*tempD.*tempD;
            end
        end
     end

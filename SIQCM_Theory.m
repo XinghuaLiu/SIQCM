@@ -5,17 +5,18 @@ close all
 clc
 
 
-load("../../Modified SOFI/fSOFI/result_256_s17k2.mat")
+load("../../Modified SOFI/fSOFI/result_32m_k2_rayleigh.mat")
 framesSOFI = framesSOFI_FI;
 framesSIM = framesSIM_FIFI;
 %% Background Normalization
 framesSOFI = BgNormalization(framesSOFI);
 framesSIM = BgNormalization(framesSIM);
+Mag_factor = 512./size(framesSOFI,1);
 
-kcutoff = 71.2;
+kcutoff = 71.2./Mag_factor;
 gamma = 0.03;
 k_factor = 2;
-Mag_factor = 512./size(framesSOFI,1);
+
 
 OTFo = OTFgenerate(size(framesSOFI,1),kcutoff,[0 0]);
 %% Background subtraction
@@ -28,8 +29,8 @@ fSIM = zeros(size(framesSIM,1),size(framesSIM,1),15);
 n = ceil(size(framesSOFI,3)^0.5);
 kSOFI = [55.2999518421719,14.8178997907538;36.0211937118148,44.4855121273234;2.99816376817320,57.1734861088626;-31.1686926498762,48.0054494087735;-53.4430624244311,20.5108414886416];
 kSIM = [55.2999518421719,14.8178997907538;36.0211937118148,44.4855121273234;2.99816376817320,57.1734861088626;-31.1686926498762,48.0054494087735;-53.4430624244311,20.5108414886416];
-kSOFI=kSOFI./0.8.*k_factor;
-kSIM = kSIM./0.8.*k_factor;
+kSOFI=kSOFI./0.8.*k_factor./Mag_factor;
+kSIM = kSIM./0.8.*k_factor./Mag_factor;
 phaseSOFI = [0 pi/5 pi*2/5 pi*3/5 pi*4/5;
     0 pi/5 pi*2/5 pi*3/5 pi*4/5;
     0 pi/5 pi*2/5 pi*3/5 pi*4/5;
@@ -45,8 +46,8 @@ for i = 1 : n
 end
 
 %% check all freq component
-viewFreq(fSOFI);
-viewIMG(fSOFI);
+% viewFreq(fSOFI);
+% viewIMG(fSOFI);
 %% Wiener Filtering the noisy frequency components
 
 % %% check all freq component
