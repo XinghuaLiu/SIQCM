@@ -5,14 +5,16 @@ close all
 clc
 
 
-load("../../Modified SOFI/fSOFI/result_32m_k2_rayleigh2.mat")
+load("./result_32m_k2_rayleigh2.mat")
 framesSOFI = framesSOFI_FI;
 framesSIM = framesSIM_FIFI;
 %% Background Normalization
 framesSOFI = BgNormalization(framesSOFI);
 framesSIM = BgNormalization(framesSIM);
-itp_factor = 2;
-kcutoff = Structed.kcutoff *itp_factor*itp_factor;
+N = 32;
+itp_factor = N/2/pi;
+
+kcutoff = Structed.kcutoff*itp_factor;
 kSOFI = zeros(Structed.n,2);
 for i = 1 : Structed.n
     kSOFI(i,1) = Structed.k*sin(Structed.Orient(i))*itp_factor;
@@ -20,7 +22,7 @@ for i = 1 : Structed.n
 end
 kSIM = kSOFI;
 % Mag_factor = 512./size(framesSOFI,1);
-% 
+% f
 % kcutoff = 71.2./Mag_factor;
  gamma = 0.1;
 % k_factor = 2;
