@@ -1,4 +1,4 @@
-function Fsum = WienerF2(f,k,kcutoff,gamma)
+function [Fsum, Fperi] = WienerF2(f,k,kcutoff,gamma)
     n = ceil(size(f,3)^0.5);
     Fcent =zeros(size(f,1),size(f,2));
     for i = 1 : n
@@ -11,8 +11,6 @@ function Fsum = WienerF2(f,k,kcutoff,gamma)
     wo = w/2;
     Fsum = zeros(t,t);
     Fperi = zeros(t,t);
-    Dsum = zeros(t,t); 
-    Dperi = zeros(t,t);
     to = t/2;
     u = linspace(0,t-1,t);
     v = linspace(0,t-1,t);

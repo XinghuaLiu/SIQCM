@@ -5,7 +5,7 @@ function []= viewFreq(f)
     for i = 1 : n
         for j = 1 : 5
         subplot(5,n,j+(i-1)*5);
-        imshow(log(abs(f(:,:,j+(i-1)*5))),[0 maxF]);    
+        imshow((abs(f(:,:,j+(i-1)*5))),[]);    
         end
     end
 end
