@@ -14,5 +14,5 @@ function OTF = OTFgenerate(size,kcutoff,k0)
     %ko = k./kcutoff;
     %OTF = 2/pi*(acos(k./kcutoff)-k./kcutoff*sqrt(1-(k./kcutoff).^2));
     OTF = exp(-4.4*(k./kcutoff).^2);
-    OTF(OTF<0.02)=0;
+    OTF(OTF<0.001)=0;
 end

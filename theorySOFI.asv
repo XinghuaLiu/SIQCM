@@ -1,0 +1,23 @@
+function [framesSOFI] = theorySOFI(t,positions,Structed,scaling_t,sigma)
+    framesSOFI = zeros(t*scaling_t,t*scaling_t,Structed.n^2);
+    position_new = positions*scaling_t;
+    Ion = 800;
+    sigma_new = sigma*scaling_t;
+    Nemitters = size(positions,1);
+    kSOFI = zeros(Structed.n,2);
+    for i = 1 : Structed.n
+        kSOFI(i,1) = Structed.k*cos(Structed.Orient(i))/scaling_t;
+        kSOFI(i,2) = Structed.k*sin(Structed.Orient(i))/scaling_t;
+    end
+    for i = 1 : Structed.n
+        for j = 1 : Structed.n
+            phase = (j-1)*2*pi/Structed.n-(kSOFI(i,1)+kSOFI(i,2))*(t+1)/2;
+            brightness = zeros(Nemitters,1);
+            for k = 1 : Nemitters
+                brightness(k) = Ion*(1+cos((kSOFI(i,1)*position_new(k,1)...
+                    +kSOFI(i,2)*position_new(k,2)+phase)));
+            end
+            framesSOFI(:,:,(i-1)*Structed.n+j) = ApplyPSF(t*scaling_t,position_new,brightness,sigma_new);
+        end
+    end
+end

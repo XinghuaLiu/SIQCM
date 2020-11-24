@@ -5,14 +5,14 @@ Dsum = real( ifft2(fftshift(Fsum)) );
 Dperi = real( ifft2(fftshift(Fperi)) );
 Dsum2 = real( ifft2(fftshift(Fsum2)) );
 figure;
-imshow(Dsum(),[])
+imshow(Dsum(),[],'InitialMagnification',400)
 title('Appodized SIQCM image')
 colormap('hot');
 figure;
-imshow(Dperi(),[])
+imshow(Dperi(),[],'InitialMagnification',400)
 title('SIQCM image (using only off-center frequency components)')
 figure;
-imshow(Dsum2(),[])
+imshow(Dsum2(),[],'InitialMagnification',400)
 title('SIQCM image')
 % appodizing the merged frequency components
 % Index = 0.4;
@@ -64,13 +64,13 @@ title('SIQCM image')
 % 
 p = 10;
 figure;
-imshow(abs(Fcent),[])
+imshow(abs(Fcent),[],'InitialMagnification',400)
 title('Weiner Filtered frequency')
 figure;
-imshow(abs(Fsum),[])
+imshow(abs(Fsum),[],'InitialMagnification',400)
 title('SIQCM frequency')
 figure;
-imshow(abs(Fperi),[])
+imshow(abs(Fperi),[],'InitialMagnification',400)
 title('SIQCM (off-center frequency components)')
 % figure;
 % imshow(abs(FsumA).^(1/p),[])
