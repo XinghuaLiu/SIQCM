@@ -14,7 +14,8 @@ function w =  WienerMask(t,kcutoff,k,korder,gamma)
             D = D +c(j)*temp;
         end
     end
-
+%     surf(D);
+%     pause;
     D = D + gamma*gamma;
     w = 1./D.*H;
 end

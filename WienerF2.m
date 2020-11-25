@@ -25,7 +25,7 @@ function [Fsum, Fperi] = WienerF2(f,k,kcutoff,gamma)
     for i = 1 : n
        for j = 1 : n
            W = WienerMask(t,kcutoff,k,k(i,:).*kshift(j),gamma);
-           temp = (ifft2(fftshift(fdouble(:,:,(i-1)*n+j).*W)));   
+           temp = (ifft2(fftshift(fdouble(:,:,(i-1)*n+j).*W.*c(j))));   
       %     imshow(log(W),[]);
            temp =temp .* exp( kshift(j)*1i.*2.*pi.*((k(i,2)/t.*(U-to) + k(i,1)/t.*(V-to))));
            Fsum = Fsum + temp;
@@ -38,7 +38,7 @@ function [Fsum, Fperi] = WienerF2(f,k,kcutoff,gamma)
        end
     end
     figure;
-    imshow(real(Fsum),[],'InitialMagnification',400);
+    imshow(abs(Fsum),[],'InitialMagnification',400);
     colormap('hot');
     title('SIQCM in Real Space')
 end

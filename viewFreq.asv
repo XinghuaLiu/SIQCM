@@ -6,7 +6,7 @@ function []= viewFreq(f)
         for j = 1 : 5
         subplot(5,n,j+(i-1)*5);
         imshow((abs(f(:,:,j+(i-1)*5))),[]);  
-        title(mean(mean(abs(abs(f(:,:,j+(i-1)*5))))));
+        title()
         end
     end
 end

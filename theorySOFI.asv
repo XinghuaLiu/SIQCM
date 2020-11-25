@@ -11,11 +11,11 @@ function [framesSOFI] = theorySOFI(t,positions,Structed,scaling_t,sigma)
     end
     for i = 1 : Structed.n
         for j = 1 : Structed.n
-            phase = (j-1)*2*pi/Structed.n-(kSOFI(i,1)+kSOFI(i,2))*(t+1)/2;
+            phase = (j-1)*2*pi/Structed.n-(kSOFI(i,1)+kSOFI(i,2))*(t*scaling_t+1)/2;
             brightness = zeros(Nemitters,1);
             for k = 1 : Nemitters
-                brightness(k) = Ion*(1+cos((kSOFI(i,1)*position_new(k,1)...
-                    +kSOFI(i,2)*position_new(k,2)+phase)));
+                brightness(k) = Ion*cos((kSOFI(i,1)*position_new(k,1)...
+                    +kSOFI(i,2)*position_new(k,2)+phase))^4;
             end
             framesSOFI(:,:,(i-1)*Structed.n+j) = ApplyPSF(t*scaling_t,position_new,brightness,sigma_new);
         end

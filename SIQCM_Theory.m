@@ -1,21 +1,19 @@
 %This program need to provide therotically value of k0 and phi
 %% Initialize the matrix 
 clear all
-close all
+%close all
 clc
 
 
 load("./result_32m_k2_lownoise2.mat")
 framesSOFI = framesSOFI_FI;
 framesSIM = framesSIM_FIFI;
-% %% Background Normalization
-% framesSOFI = BgNormalization(framesSOFI);
-% framesSIM = BgNormalization(framesSIM);
+
 %%
-TheoryFrames = theorySOFI(32,Fluo.emitters,Structed,4,Optics.fwhm_digital/2.3548/sqrt(2));
+TheoryFrames = theorySOFI(32,Fluo.emitters,Structed,2,Optics.fwhm_digital/2.3548/sqrt(2));
 N = 32;
 itp_factor = (N-1)/2/pi;
-framesSOFI = TheoryFrames;
+%framesSOFI = TheoryFrames;
 kcutoff = Structed.kcutoff*itp_factor;
 kSOFI = zeros(Structed.n,2);
 for i = 1 : Structed.n
@@ -23,7 +21,7 @@ for i = 1 : Structed.n
     kSOFI(i,2) = Structed.k*sin(Structed.Orient(i))*itp_factor;
 end
 kSIM = kSOFI;
-gamma = 0.2;
+gamma = 0.1;
 
 
 
@@ -61,13 +59,13 @@ end
 [Fsum,Fsum2,Fperi,Fcent] = WienerF(fSOFI,kSOFI,kcutoff,gamma);
 [Dsum,Dperi]= WienerF2(fSOFI,kSOFI,kcutoff,gamma);
 %[FsumSIM,FsumSIM2,FperiSIM,FcentSIM] = WienerFSIM(fSIM,kSIM,kcutoff,gamma);
-%SIMplot(Fsum,Fsum2,Fperi,Fcent,kSOFI,OTFo);
+SIMplot(Fsum,Fsum2,Fperi,Fcent,kSOFI,OTFo);
 % SIMplotSIM(FsumSIM,FsumSIM2,FperiSIM,FcentSIM,kSIM,OTFo);
-% frameSUM = sum(framesSIM_FIFI,3);
+% frameSUM = mean(framesSIM_FIFI,3);
 % figure; 
 % imshow(frameSUM,[]);
 % title('Intensity')
-% framesSOFI = sum(framesSOFI_FI,3);
+% framesSOFI = mean(framesSOFI_FI,3);
 % figure; 
 % imshow(framesSOFI,[]);
 % title('SOFI average Intensity')

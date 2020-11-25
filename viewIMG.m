@@ -12,6 +12,7 @@ function []= viewIMG(f)
         for j = 1 : 5
         subplot(n,n,(i-1)*n+j);
         imshow(img(:,:,(i-1)*n+j),[]);
+%         title(mean(mean(img(:,:,(i-1)*n+j))));
         end
      end
 end
